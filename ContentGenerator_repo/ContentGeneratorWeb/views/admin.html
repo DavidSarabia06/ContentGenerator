@@ -1,0 +1,61 @@
+﻿<div class="settings-header">
+  <h2>🛡️ Panel de administración</h2>
+  <p class="muted">Herramientas para gestionar usuarios.</p>
+</div>
+
+<div class="settings-grid">
+  <div class="card">
+    <div class="card-head">
+      <h3>Crear usuario</h3>
+      <span class="badge">Alta</span>
+    </div>
+    <div class="section-block">
+      <label class="section-title">Usuario</label>
+      <input type="text" id="regUsername" placeholder="Nombre de usuario" />
+    </div>
+    <div class="section-block">
+      <label class="section-title">Email</label>
+      <input type="email" id="regEmail" placeholder="correo@dominio.com" />
+    </div>
+    <div class="section-block">
+      <label class="section-title">Contraseña</label>
+      <div class="input-wrapper">
+        <input type="password" id="regPassword" placeholder="Contraseña" />
+        <span class="eye-icon" data-target="regPassword" role="button" tabindex="0" aria-label="Mostrar contraseña">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+    </div>
+    <div class="section-block">
+      <label class="remember-me">
+        <input type="checkbox" id="regIsAdmin" />
+        Hacer administrador
+      </label>
+    </div>
+    <div class="section-block">
+      <label class="remember-me">
+        <input type="checkbox" id="regAllowNotifications" checked />
+        Permitir notificaciones
+      </label>
+    </div>
+    <div class="actions right gap">
+      <button class="btn" id="btnAdminRegister" onclick="adminRegisterUser()" >Crear usuario</button>
+    </div>
+    <div id="adminMsg" class="muted" style="margin-top:.5rem;"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h3>Eliminar usuario</h3>
+      <span class="badge danger">Borrado</span>
+    </div>
+    <p class="muted">Escribe el <strong>username</strong> del usuario a eliminar.</p>
+    <div class="section-block">
+      <input type="text" id="adminDelUser" placeholder="username" />
+    </div>
+    <div class="actions right gap">
+      <button class="btn danger" id="btnDeleteUser" onclick="adminDeleteUserByName()" >Eliminar usuario</button>
+    </div>
+    <div id="adminMsgDelete" class="muted" style="margin-top:.5rem;"></div>
+  </div>
+</div>

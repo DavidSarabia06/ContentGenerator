@@ -1,0 +1,15 @@
+fastapi~=0.116.1
+openai~=1.97.0
+uvicorn
+python-dotenv~=1.1.1
+
+pydantic~=2.11.7
+dotenv~=0.9.9
+pymongo~=4.13.2
+python-jose~=3.5.0
+passlib~=1.7.4
+requests~=2.32.4
+cryptography~=45.0.5
+constants_and_tools~=1.1.2
+pytz~=2025.2
+constants_and_tools~=1.1.2

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de Contenido</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<div class="layout-wrapper">
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+
+      <div class="left">
+        <div class="title" onclick="toggleSidebar()">
+          <img id="toggle" src="icons/desplegar_light.png" alt="Toggle" class="icon">
+        </div>
+        <div class="title2">
+          <span id="title-text">Generador de Contenido</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <span id="welcome">
+          <span id="welcome-text">👋 Hola, usuario</span>
+          <img src="icons/user.png" alt="Usuario" class="user-icon">
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor principal con barra lateral + contenido -->
+  <div class="main-container">
+    <!-- Barra lateral -->
+    <div class="sidebar collapsed" id="sidebar">
+    <ul class="nav-links">
+  <li data-route="/generator" onclick="navigateTo('generator')">
+    <img src="icons/IA_light.png" alt="Generador" class="icon">
+    <span class="label">Generador de Contenidos</span>
+  </li>
+  <li data-route="/history" onclick="navigateTo('history')">
+    <img src="icons/history_light.png" alt="Historial" class="icon">
+    <span class="label">Historial de Contenidos</span>
+  </li>
+</ul>
+
+<ul class="bottom-links">
+  <li data-route="/settings" onclick="navigateTo('settings')">
+    <img src="icons/settings_light.png" alt="Ajustes" class="icon">
+    <span class="label">Ajustes</span>
+  </li>
+  <li onclick="logout()">
+    <img src="icons/logout_big_red.png" alt="Cerrar sesión" class="icon">
+    <span class="label">Cerrar sesión</span>
+  </li>
+</ul>
+    </div>
+
+    <!-- Fondo -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Contenido principal (DINÁMICO) -->
+    <div class="container2" id="app-view">
+      <!-- Aquí se inyectan las vistas -->
+    </div>
+  </div>
+</div>
+
+
+<script src="js/config.js" defer></script>
+<!-- Router SPA ligero (solo cambia .container2) -->
+
+<script src="js/auth-actions.js" defer></script>
+<script src="js/admin-actions.js" defer></script>
+<script src="js/general.js" defer></script>
+<script src="js/utils.js" defer></script>
+<script src="js/redirect.js" defer></script>
+
+<script src="js/generator.js" defer></script>
+<script src="js/history.js" defer></script>
+<script src="js/sidebar.js" defer></script>
+<script src="js/bg_animation.js" defer></script>
+
+<script type="module" src="js/router.js" defer></script>
+
+
+
+
+
+</body>
+</html>

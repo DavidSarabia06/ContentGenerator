@@ -1,0 +1,19 @@
+﻿<div class="settings-header">
+  <h2>🗑️ Eliminar cuenta</h2>
+  <p class="muted">Esta acción es <strong>irreversible</strong>. Piensa dos veces antes de continuar.</p>
+</div>
+
+<div class="card">
+  <div class="section-block">
+    <p class="muted">Escribe <code>ELIMINAR</code> para confirmar.</p>
+    <input type="text" id="confirmText" placeholder="ELIMINAR" />
+  </div>
+  <div class="actions right gap">
+    <button type="button" class="btn ghost" onclick="navigateTo('settings')">← Volver</button>
+    <button id="deleteBtn" class="btn danger" onclick="deleteAccount(event)">Eliminar cuenta permanentemente</button>
+  </div>
+  <div id="message" class="muted" style="margin-top:.5rem;"></div>
+  <div id="redirect" class="muted" style="margin-top:.25rem;"></div>
+</div>
+
+<script src="/js/settings-delete-account.js"></script>

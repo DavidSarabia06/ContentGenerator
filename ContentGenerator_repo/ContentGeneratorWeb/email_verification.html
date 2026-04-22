@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verificación de correo</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    a {
+      display: inline-block;
+      background-color: #0078d4;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <div class="left">
+        <div class="title2">
+          <span id="title-text">Generador de Contenido</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <canvas id="bg-canvas"></canvas> <!-- AÑADIDO -->
+  <div class="container1">
+    <h2 id="status-title">Procesando...</h2>
+    <p id="status-message">Verificando tu correo electrónico...</p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/redirect.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("status");
+
+    const title = document.getElementById("status-title");
+    const message = document.getElementById("status-message");
+
+    switch (status) {
+      case "success":
+        title.textContent = "✅ ¡Correo verificado!";
+        message.textContent = "Tu correo ha sido verificado exitosamente.";
+        startRedirectCountdown(5, "login.html");
+        break;
+
+      case "already_verified":
+        title.textContent = "✔️ Correo ya verificado";
+        message.textContent = "Este correo ya estaba verificado anteriormente.";
+        startRedirectCountdown(5, "login.html");
+        break;
+
+      case "invalid":
+        title.textContent = "❌ Token inválido o expirado";
+        message.textContent = "El enlace de verificación ha expirado o no es válido.";
+        startRedirectCountdown(5, "login.html");
+        break;
+
+      case "notfound":
+        title.textContent = "❌ Usuario no encontrado";
+        message.textContent = "No se encontró un usuario asociado a este token.";
+        startRedirectCountdown(5, "login.html");
+        break;
+
+      default:
+        title.textContent = "⚠️ Error desconocido";
+        message.textContent = "Algo salió mal al verificar tu correo.";
+        startRedirectCountdown(5, "login.html");
+        break;
+    }
+  </script>
+  <script src="js/bg_animation.js"></script>
+</body>
+</html>

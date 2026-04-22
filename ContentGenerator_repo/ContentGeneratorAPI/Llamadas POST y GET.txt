@@ -1,0 +1,45 @@
+TESTING
+
+######################
+## REGISTER / LOGIN ##
+######################
+
+POST http://127.0.0.1:8000/auth/login
+
+{
+  "username": "David",
+  "password": "123456"
+}
+
+POST http://127.0.0.1:8000/auth/register
+
+{
+  "username": "David",
+  "password": "123456"
+}
+
+############################
+## GENERATION / HISTORIAL ##
+############################
+
+POST http://127.0.0.1:8000/generate/  //Genera
+{
+  "prompt": "Quiero anunciar un nuevo servicio de entrega",
+  "content_type": "anuncio",
+  "tone": "profesional"
+}
+
+POST http://127.0.0.1:8000/generate/save  //Genera y guarda en DB
+{
+  "prompt": "Quiero anunciar un nuevo servicio de entrega",
+  "content_type": "anuncio",
+  "tone": "profesional"
+}
+
+
+POST http://127.0.0.1:8000/generate/history  //Devuelve el historial
+{
+  "prompt": "Quiero anunciar un nuevo servicio de entrega",
+  "content_type": "anuncio",
+  "tone": "profesional"
+}

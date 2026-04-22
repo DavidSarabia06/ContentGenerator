@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Generador de Contenido</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+
+      <div class="left">
+        <div class="title2">
+          <span id="title-text">Generador de Contenido</span>
+        </div>
+      </div>
+      </div>
+  </header>
+  <canvas id="bg-canvas"></canvas> <!-- AÑADIDO -->
+  <div class="container1">
+    <h2>🔐 Registro</h2>
+
+    <!-- 🧑 Usuario -->
+    <div class="input-wrapper">
+        <input type="text" id="username" placeholder="Usuario" />
+    </div>
+    <!-- 📧 Correo electrónico -->
+    <div class="input-wrapper">
+        <input type="email" id="email" placeholder="Correo electrónico (solo para registro)" />
+    </div>
+    <!-- 🔒 Contraseña -->
+    <div class="input-wrapper">
+      <input type="password" id="password" placeholder="Contraseña">
+      <span class="eye-icon" id="togglePassword">
+        <i class="fa-solid fa-eye"></i>
+      </span>
+    </div>
+
+    <!-- ✅ Recuérdame + Olvidado -->
+    <div class="horizontal-container">
+        <div class="remember-forgot">
+          <label class="remember-me">
+            <input type="checkbox" id="remember"> Recuérdame
+          </label>
+        </div>
+    </div>
+
+
+    <!-- ⚙️ Acciones -->
+    <div class="actions">
+      <button id="register-button" class="full-width" onclick="register()">Registrarse</button>
+    </div>
+
+    <span id="welcome"></span>
+    <p id="message"></p>
+
+  </div>
+  <script src="js/config.js" defer></script>
+  <script src="js/general.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth-actions.js"></script>
+  <script src="js/bg_animation.js"></script>
+</body>
+</html>
