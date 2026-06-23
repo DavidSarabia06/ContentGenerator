@@ -1,6 +1,6 @@
 @echo off
 REM Ruta al proyecto web
-cd /d C:\Users\David\Desktop\ContentGenerator_Project\ContentGeneratorWeb
+cd /d C:\Users\David\Desktop\ContentGenerator\ContentGenerator_repo\ContentGeneratorWeb
 
 REM Inicia el servidor HTTP local con Python 3.13
 start cmd /k py -3.13 -m http.server 5500
