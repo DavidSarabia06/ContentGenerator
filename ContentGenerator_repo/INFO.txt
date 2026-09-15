@@ -1,0 +1,2 @@
+Para utilizar la plataforma ejecutar los bats: Lanzar_API - v2.bat y Lanzar_ServidorLocal - v2. Se abrirá automáticamente  la aplicación en localhost.
+
