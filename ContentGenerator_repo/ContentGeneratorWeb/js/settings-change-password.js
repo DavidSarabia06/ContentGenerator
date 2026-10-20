@@ -4,9 +4,9 @@
 function changePassword(e) {
   if (e) e.preventDefault();
 
-  const current_password = document.getElementById("oldPass")?.value.trim() || "";
-  const new_password     = document.getElementById("newPass")?.value.trim() || "";
-  const confirm          = document.getElementById("confirmPass")?.value.trim() || "";
+  const current_password = document.getElementById("oldPass")?.value || "";
+  const new_password     = document.getElementById("newPass")?.value || "";
+  const confirm          = document.getElementById("confirmPass")?.value || "";
   const msgEl            = document.getElementById("message");
   const redir            = document.getElementById("redirect");
   const btn              = document.getElementById("btnChangePassword");
@@ -20,6 +20,15 @@ function changePassword(e) {
     return false;
   }
 
+  if ([...new_password].length < 15) {
+    if (msgEl) msgEl.innerText = "❌ La contraseña debe tener al menos 15 caracteres.";
+    return false;
+  }
+
+  if (new TextEncoder().encode(new_password).length > 72) {
+    if (msgEl) msgEl.innerText = "❌ La contraseña no puede superar los 72 bytes.";
+    return false;
+  }
   if (btn) { btn.disabled = true; btn.textContent = "Actualizando…"; }
   if (msgEl) msgEl.innerText = "Procesando…";
 

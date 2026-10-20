@@ -3,6 +3,7 @@
 
 // Estado interno sencillo para llevar el email verificado
 let verifiedEmail = "";
+let verifiedCode = "";
 
 /** Utilidad: setea texto en un elemento si existe */
 function setText(id, text) {
@@ -84,6 +85,7 @@ async function verifyCode() {
 
     if (res.ok) {
       verifiedEmail = email;
+      verifiedCode = code;
       const codeSection = document.getElementById("code-section");
       if (codeSection) codeSection.style.display = "none";
       const newPassSection = document.getElementById("new-password-section");
@@ -121,8 +123,7 @@ async function resetPassword() {
     return;
   }
 
-  // (opcional) validación mínima
-  if (password1.length < 4) {
+  if (password1.length < 15) {
     messageEl && (messageEl.textContent = "❗ La contraseña es demasiado corta.");
     return;
   }
@@ -130,10 +131,14 @@ async function resetPassword() {
   try {
     const res = await apiFetch("/auth/force_change_password", {
       method: "POST",
-      body: JSON.stringify({ email: verifiedEmail, new_password: password1 })
+      body: JSON.stringify({
+      email: verifiedEmail,
+      code: verifiedCode,
+      new_password: password1
+    })
     }, { retryOn401: false });
 
-    // Manejo 429 si tienes un handler global
+  
     if (typeof window.handleRateLimit === "function") {
       if (await window.handleRateLimit(res, messageEl, null)) return;
     }

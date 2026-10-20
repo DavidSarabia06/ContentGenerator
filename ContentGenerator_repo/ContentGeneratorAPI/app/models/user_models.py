@@ -34,8 +34,9 @@ class CodeVerificationRequest(BaseModel):
 
 class SimplePasswordChangeRequest(BaseModel):
     email: EmailStr
+    code: str
     new_password: str
-
+    
 class DeleteAccountRequest(BaseModel):
     confirm_text: str                # Debe ser "ELIMINAR"
     current_password: str | None = None  # Opcional: si lo envías, se verifica

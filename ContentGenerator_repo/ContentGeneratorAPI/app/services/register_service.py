@@ -19,6 +19,11 @@ def verify_verification_token(token: str) -> str:
 
 
 #Reubicar
-import random, string
+import secrets
+import string
+
 def generate_reset_code(length=6):
-    return ''.join(random.choices(string.digits, k=length))
+    return "".join(
+        secrets.choice(string.digits)
+        for _ in range(length)
+    )

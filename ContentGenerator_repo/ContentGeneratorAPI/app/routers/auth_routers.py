@@ -129,28 +129,6 @@ def register(user: UserRegister, request: Request, db: MongoConnector = Depends(
     )
     return {"message": "✅ Usuario registrado. Verifica tu email para activar la cuenta."}
 
-@router.post("/register_admin")
-def register_admin(user: UserRegister, request: Request, db: MongoConnector = Depends(get_mongo_connector)):
-    # rate-limit suave también aquí
-    _enforce_rate_limit_pair(
-        db=db, request=request, prefix="register-admin",
-        subject=user.email
-    )
-
-    if db.get_user(user.username):
-        raise HTTPException(status_code=400, detail="Usuario ya existe")
-    if db.get_user_by_email(user.email):
-        raise HTTPException(status_code=400, detail="Email ya está en uso")
-
-    db.create_user(
-        username=user.username,
-        password=user.password,
-        is_admin=True,
-        is_verified=True,
-        email=user.email,
-        allow_notifications=user.allow_notifications
-    )
-    return {"message": f"✅ Usuario '{user.username}' registrado como administrador."}
 
 @router.get("/verify_email")
 def verify_email(token: str, db: MongoConnector = Depends(get_mongo_connector)):
@@ -259,23 +237,88 @@ def do_logout(request: Request, response: Response):
 def change_password(
     data: ChangePasswordRequest,
     username: str = Depends(get_current_user),
-    db: MongoConnector = Depends(get_mongo_connector)
+    db: MongoConnector = Depends(get_mongo_connector),
 ):
     user = db.get_user(username)
-    if not user or not pwd_context.verify(data.current_password, user["password"]):
-        raise HTTPException(status_code=401, detail="⚠️ Contraseña actual incorrecta.")
+
+    if not user or not pwd_context.verify(
+        data.current_password, user["password"]
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Contraseña actual incorrecta.",
+        )
+
+    if len(data.new_password) < 15:
+        raise HTTPException(
+            status_code=400,
+            detail="La contraseña debe tener al menos 15 caracteres.",
+        )
+
+    if len(data.new_password.encode("utf-8")) > 72:
+        raise HTTPException(
+            status_code=400,
+            detail="La contraseña no puede superar los 72 bytes.",
+        )
+
     new_hashed = hash_password(data.new_password)
     db.update_user_password(username, new_hashed)
-    return {"message": "✅ Contraseña actualizada correctamente."}
+
+    return {"message": "Contraseña actualizada correctamente."}
 
 @router.post("/force_change_password")
-def force_change_password(data: SimplePasswordChangeRequest, db: MongoConnector = Depends(get_mongo_connector)):
-    user = db.get_user_by_email(data.email)
-    if not user:
-        raise HTTPException(status_code=404, detail="⚠️ Usuario no encontrado.")
+def force_change_password(
+    data: SimplePasswordChangeRequest,
+    db: MongoConnector = Depends(get_mongo_connector),
+):
+    if len(data.code) != 6 or any(c not in "0123456789" for c in data.code):
+        raise HTTPException(
+            status_code=400,
+            detail="Código inválido o caducado.",
+        )
+
+    if len(data.new_password) < 15:
+        raise HTTPException(
+            status_code=400,
+            detail="La contraseña debe tener al menos 15 caracteres.",
+        )
+
+    # bcrypt admite como máximo 72 bytes.
+    if len(data.new_password.encode("utf-8")) > 72:
+        raise HTTPException(
+            status_code=400,
+            detail="La contraseña supera el límite de 72 bytes.",
+        )
+
     hashed_password = hash_password(data.new_password)
-    db.update_user_password(user["username"], hashed_password)
-    return {"message": "✅ Contraseña actualizada correctamente."}
+
+    user = db.users_collection.find_one_and_update(
+        {
+            "email": str(data.email),
+            "reset_code": data.code,
+            "reset_code_expiry": {"$gt": DatetimeUtils.now()},
+        },
+        {
+            "$set": {"password": hashed_password},
+            "$unset": {
+                "reset_code": "",
+                "reset_code_expiry": "",
+            },
+        },
+        projection={"username": 1},
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=400,
+            detail="Código inválido o caducado.",
+        )
+
+    db.revoke_all_refresh_tokens(user["username"])
+
+    return {
+        "message": "Contraseña actualizada. Inicia sesión de nuevo."
+    }
 
 @router.post("/request_reset_password_code")
 def request_reset_password_code(
