@@ -12,10 +12,10 @@ REM Comprobar que existe el entorno virtual
 if not exist ".venv\Scripts\python.exe" (
     echo [ERROR] No existe el entorno virtual .venv
     echo Creando entorno virtual...
-    python -m venv .venv
+    py -3.12 -m venv .venv
 
     if errorlevel 1 (
-        echo [ERROR] No se pudo crear el entorno virtual.
+        echo [ERROR] No se pudo crear el entorno virtual. Comprueba que Python 3.12 esta instalado.
         pause
         exit /b 1
     )

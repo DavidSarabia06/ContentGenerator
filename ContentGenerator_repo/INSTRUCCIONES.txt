@@ -4,5 +4,8 @@ Instrucciones
 
 1- Rellenar las claves mencionadas del archivo .env
 
-2- Ejecutar los bats: Lanzar_API - v2.bat y Lanzar_ServidorLocal - v2. Se abrirá automáticamente  la aplicación en localhost.
+3- Installar python 3.12
+
+4- Ejecutar los bats: Lanzar_API - v3.bat - Creara en la carpeta un entorno virtual con las dependencias e iniciara la api.
+5 - Lanzar_ServidorLocal - v3. Se abrirá automáticamente  la aplicación en localhost.
 
